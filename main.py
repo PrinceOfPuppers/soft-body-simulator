@@ -37,8 +37,9 @@ class GameManager:
         pg.display.set_caption("Jelly Boi")
         while not self.hasQuit:
             mousePos=self.applyControls()
-            print(self.clock)
             self.tickNumber+=1
+            if self.tickNumber%100==0:
+                print(self.clock)
             self.clock.tick_busy_loop(self.fps)
             self.body.handler(self.display,self.spf,self.tickNumber,mousePos)
             pg.display.update()

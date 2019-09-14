@@ -2,6 +2,9 @@ from numpy import zeros,around,conj,inf,array
 from math import floor
 import pygame as pg
 from math import sqrt
+
+
+
 class Body:
     def __init__(self,config):
         self.points=zeros(config.dimensions,dtype=complex)
@@ -23,6 +26,7 @@ class Body:
         self.pointTeatheredIndex=array((-1,-1),dtype=int)
         self.teatherLength=-1
         self.circleRadius=config.circleRadius
+
     def constructBody(self,topLeftPoint):
         for xIndex in range(0,self.dimensions[0]):
             for yIndex in range(0,self.dimensions[1]):
@@ -62,10 +66,10 @@ class Body:
                             point1=self.points[xIndex+offsetX,yIndex+offsetY]
                             point2=self.points[xIndex,yIndex]
                             pg.draw.aaline(display, (255,int(255-255*colorMod),int(255-255*colorMod)),(point1.real,point1.imag), (point2.real,point2.imag))
-                #applys externalForces
+                #...applys externalForces
                 self.pointVels[xIndex,yIndex]+=externalForces*deltaT/self.pointMass
 
-                #applies boundry forces
+                #..apply boundry forces
                 #real axis
                 if self.points[xIndex,yIndex].real<=0:
                     self.pointVels[xIndex,yIndex]=abs(self.pointVels[xIndex,yIndex].real*(1-self.collisionDamping))+(1-self.friction)*self.pointVels[xIndex,yIndex].imag*1j
@@ -101,7 +105,7 @@ class Body:
         else:
             x,y=self.findNearestPointIndex(mousePos)
         point=(int(self.points[x,y].real),int(self.points[x,y].imag))
-        pg.draw.circle(display,(255,0,0),point,self.circleRadius,2)
+        pg.draw.circle(display,(255,0,0),point,self.circleRadius,1)
 
     def teatherNearest(self,mousePos):
         self.pointIsTeathered=True
